@@ -1,5 +1,6 @@
 package com.ligan.web.controller.pdforword;
 
+import com.ligan.common.core.domain.AjaxResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,5 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PdfOrWordController {
 
+    public AjaxResult wordToPdf(){
 
+        return AjaxResult.success();
+    }
 }
