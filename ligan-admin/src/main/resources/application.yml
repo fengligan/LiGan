@@ -14,7 +14,10 @@ ruoyi:
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
   captchaType: math
-
+  #wordToPdf生成位置
+  wordToPdfPath: D:/wordToPdf
+  #报告生成位置
+  baogao: D:/createbaogao
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
@@ -42,7 +45,7 @@ spring:
   messages:
     # 国际化资源文件路径
     basename: i18n/messages
-  profiles: 
+  profiles:
     active: druid
   # 文件上传
   servlet:
@@ -65,7 +68,7 @@ spring:
     # 数据库索引
     database: 0
     # 密码
-    password: 
+    password: 1234
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -87,7 +90,7 @@ token:
     secret: abcdefghijklmnopqrstuvwxyz
     # 令牌有效期（默认30分钟）
     expireTime: 30
-  
+
 # MyBatis配置
 mybatis:
     # 搜索指定包别名
@@ -98,11 +101,11 @@ mybatis:
     configLocation: classpath:mybatis/mybatis-config.xml
 
 # PageHelper分页插件
-pagehelper: 
+pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
-  params: count=countSql 
+  params: count=countSql
 
 # Swagger配置
 swagger:
@@ -112,10 +115,13 @@ swagger:
   pathMapping: /dev-api
 
 # 防止XSS攻击
-xss: 
+xss:
   # 过滤开关
   enabled: true
   # 排除链接（多个用逗号分隔）
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+#word to pdf 去水印
+licensePath: D:\MyIdeaWorkPAce\LiGan\ligan-common\src\main\java\resources\static\license.xml

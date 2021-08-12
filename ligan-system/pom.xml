@@ -23,6 +23,7 @@
             <artifactId>ligan-common</artifactId>
         </dependency>
 
+
     </dependencies>
 
 </project>
