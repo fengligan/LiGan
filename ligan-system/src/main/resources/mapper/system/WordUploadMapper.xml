@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ligan.system.mapper.WordUploadMapper">
+    
+    <resultMap type="WordUpload" id="WordUploadResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="path"    column="path"    />
+        <result property="ip"    column="ip"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectWordUploadVo">
+        select id, name, path, ip, create_by, create_id, create_time from word_upload
+    </sql>
+
+    <select id="selectWordUploadList" parameterType="WordUpload" resultMap="WordUploadResult">
+        <include refid="selectWordUploadVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="path != null  and path != ''"> and path = #{path}</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectWordUploadById" parameterType="Long" resultMap="WordUploadResult">
+        <include refid="selectWordUploadVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWordUpload" parameterType="WordUpload" useGeneratedKeys="true" keyProperty="id">
+        insert into word_upload
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="path != null">path,</if>
+            <if test="ip != null">ip,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="path != null">#{path},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWordUpload" parameterType="WordUpload">
+        update word_upload
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="path != null">path = #{path},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWordUploadById" parameterType="Long">
+        delete from word_upload where id = #{id}
+    </delete>
+
+    <delete id="deleteWordUploadByIds" parameterType="String">
+        delete from word_upload where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
