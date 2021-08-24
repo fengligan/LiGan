@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ligan.system.mapper.WordUploadMapper">
-    
+
     <resultMap type="WordUpload" id="WordUploadResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
@@ -12,27 +12,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createBy"    column="create_by"    />
         <result property="createId"    column="create_id"    />
         <result property="createTime"    column="create_time"    />
+        <result property="hostName"    column="host_name"    />
+        <result property="ipAddress"    column="ip_address"    />
     </resultMap>
 
     <sql id="selectWordUploadVo">
-        select id, name, path, ip, create_by, create_id, create_time from word_upload
+        select id, name, path, ip, create_by, create_id, create_time,host_name,ip_address from word_upload
     </sql>
 
     <select id="selectWordUploadList" parameterType="WordUpload" resultMap="WordUploadResult">
         <include refid="selectWordUploadVo"/>
-        <where>  
+        <where>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="path != null  and path != ''"> and path = #{path}</if>
             <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
             <if test="createId != null "> and create_id = #{createId}</if>
         </where>
     </select>
-    
+
     <select id="selectWordUploadById" parameterType="Long" resultMap="WordUploadResult">
         <include refid="selectWordUploadVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertWordUpload" parameterType="WordUpload" useGeneratedKeys="true" keyProperty="id">
         insert into word_upload
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -42,6 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createBy != null">create_by,</if>
             <if test="createId != null">create_id,</if>
             <if test="createTime != null">create_time,</if>
+            <if test="hostName != null">host_name,</if>
+            <if test="ipAddress != null">ip_address,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">#{name},</if>
@@ -50,6 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createBy != null">#{createBy},</if>
             <if test="createId != null">#{createId},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="hostName != null">#{hostName},</if>
+            <if test="ipAddress != null">#{ipAddress},</if>
          </trim>
     </insert>
 
@@ -62,6 +68,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createId != null">create_id = #{createId},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="hostName != null">host_name = #{hostName},</if>
+            <if test="ipAddress != null">ip_address = #{ipAddress},</if>
         </trim>
         where id = #{id}
     </update>
@@ -71,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteWordUploadByIds" parameterType="String">
-        delete from word_upload where id in 
+        delete from word_upload where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
